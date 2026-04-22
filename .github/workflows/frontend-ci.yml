@@ -1,0 +1,38 @@
+name: Frontend CI (React)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Tell GitHub to do all of this inside your frontend folder
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js 22
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    # Requirement A: Install dependencies and build
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build React App
+      run: npm run build
+
+    # Requirement B: Save the production build as an artifact
+    - name: Upload React Dist Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: react-production-build
+        path: frontend/dist/
+        retention-days: 5

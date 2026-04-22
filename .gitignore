@@ -1,0 +1,11 @@
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Java/Maven
+backend/target/
+!backend/.mvn/wrapper/maven-wrapper.jar
+
+# Misc
+.env
+.vscode/

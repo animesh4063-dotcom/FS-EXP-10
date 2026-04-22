@@ -1,0 +1,13 @@
+### 1. GET THE VIP WRISTBAND (JWT)
+POST http://localhost:8081/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "password123"
+}
+
+### 2. ENTER THE VIP ROOM (RBAC)
+# Note: Paste the token you get from Step 1 over the words YOUR_TOKEN_HERE
+GET http://localhost:8081/auth/admin-data
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3Njg0MDA2MSwiZXhwIjoxNzc2ODc2MDYxfQ.U9JeIMSVttc3UwXktMC7-6Zd4g5h7-QbiFZt-zmP6hM
