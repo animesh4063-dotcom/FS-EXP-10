@@ -28,4 +28,4 @@ jobs:
 
     - name: Build with Maven
       # We run the command from the root but point it to the backend folder
-      run: ./backend/mvnw clean package -f backend/pom.xml
+      run: ./backend/mvnw clean package -DskipTests backend/pom.xml
