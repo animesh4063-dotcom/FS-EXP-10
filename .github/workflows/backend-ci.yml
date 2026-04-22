@@ -1,6 +1,5 @@
 name: Backend CI (Spring Boot)
 
-# This tells the robot to run every time you push to the 'main' branch
 on:
   push:
     branches: [ "main" ]
@@ -8,11 +7,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    # Tell GitHub to do all of this inside your backend folder
-    defaults:
-      run:
-        working-directory: ./backend
+    
+    # We force the runner to use Node 24 to fix that warning
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
     - name: Checkout Repository
@@ -23,18 +21,11 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        cache: maven
 
-    - name: Make Maven Wrapper Executable
-      run: chmod +x mvnw
+    - name: Grant execute permission for mvnw
+      run: chmod +x backend/mvnw
 
-    # Requirement A: Run tests and package the application
     - name: Build with Maven
-      run: ./mvnw clean package
-
-    # Requirement B: Save the compiled JAR as a build artifact
-    - name: Upload Spring Boot Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: backend-jar
-        path: backend/target/*.jar
-        retention-days: 5
+      # We run the command from the root but point it to the backend folder
+      run: ./backend/mvnw clean package -f backend/pom.xml
